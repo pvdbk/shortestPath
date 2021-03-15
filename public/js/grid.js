@@ -8,8 +8,8 @@ const NB_LINES_MAX = 100;
 const NB_COLUMNS_MAX = 100;
 const RADIUS_MIN = 1;
 const RADIUS_MAX = 10;
-const { floor, min, max, PI } = Math;
 
+const { floor, min, max, PI } = Math;
 const fitVal = (x, valMin, valMax) => max(valMin, min(x, valMax));
 const numValue = elt => parseInt(elt.value);
 const new2DArray = (nbLines, nbColumns, value) => new Array(nbLines)
@@ -123,10 +123,10 @@ class Grid {
     }
 
     drawCorner(line, column, dl, dc, doAround) {
-        const x = column*this.squareSide;
-        const y = line*this.squareSide;
-        const l = line+dl;
-        const c = column+dc;
+        const x = column * this.squareSide;
+        const y = line * this.squareSide;
+        const l = line + dl;
+        const c = column + dc;
         const dlOk = l >= 0 && l < this.nbLines;
         const dcOk = c >= 0 && c < this.nbColumns;
         const test = (mainCnt, dlCnt, dcCnt, dldcCnt) =>

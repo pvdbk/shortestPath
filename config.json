@@ -1,8 +1,12 @@
 {
     "nav": [
         {
-            "content": "éditeur de grilles",
-            "url": "grid"
+            "text": "accueil",
+            "url": "welcome"
+        },
+        {
+            "text": "éditeur de grilles",
+            "url": "edit"
         }
     ],
     "routes": [

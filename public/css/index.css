@@ -23,7 +23,15 @@ header
 nav
 {
     background-color: #0af;
+}
+
+nav p
+{
+    cursor: pointer;
+    border: 2px;
+    border-style: solid;
     padding: 1em;
+    margin: 2px;
 }
 
 #view

@@ -1,3 +1,5 @@
 <?php
 
-echo '<strong>Hello</strong>';
+foreach(App::get()->getConfig()['nav'] as $navItem) {
+    echo '<p data-url="' . $navItem['url'] . '">' . $navItem['text'] . '</p>';
+}
