@@ -1,0 +1,21 @@
+{
+    "nav": [
+        {
+            "content": "éditeur de grilles",
+            "url": "grid"
+        }
+    ],
+    "routes": [
+        {
+            "url": "/edit\\?id=([0-9]+)",
+            "view": "grid",
+            "params": ["id"]
+        },
+        {
+            "url": "/edit",
+            "view": "grid",
+            "params": []
+        }
+    ],
+    "defaultView": "welcome"
+}

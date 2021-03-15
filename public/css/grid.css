@@ -1,0 +1,29 @@
+#view>div:first-child
+{
+    padding: 1em;
+    flex: 1;
+}
+
+#view>div:last-child
+{
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+#view input
+{
+    width: 3em;
+}
+
+#view td
+{
+    width: fit-content;
+    padding-right: 1em;
+}
+
+#view td button
+{
+    width: 100%;
+}

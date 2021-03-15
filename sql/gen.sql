@@ -1,0 +1,50 @@
+CREATE DATABASE IF NOT EXISTS shortest_path
+    CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_general_ci;
+
+USE shortest_path;
+
+CREATE TABLE IF NOT EXISTS map (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    height INT NOT NULL,
+    width INT NOT NULL,
+    definition BLOB NOT NULL,
+    creation_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    update_time DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS net (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    map_id INT NULL DEFAULT NULL,
+    update_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT `fk_net_map`
+        FOREIGN KEY (map_id) REFERENCES map (id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS node (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    net_id INT NULL DEFAULT NULL,
+    x INT NULL DEFAULT NULL,
+    y INT NULL DEFAULT NULL,
+    CONSTRAINT `fk_node_net`
+        FOREIGN KEY (net_id) REFERENCES net (id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS line (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    node1_id INT NOT NULL,
+    node2_id INT NOT NULL,
+    CONSTRAINT `fk_line_node1`
+        FOREIGN KEY (node1_id) REFERENCES node (id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    CONSTRAINT `fk_line_node2`
+        FOREIGN KEY (node2_id) REFERENCES node (id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+) ENGINE = InnoDB;
