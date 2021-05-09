@@ -1,4 +1,8 @@
-<?php require __DIR__ . '/../App.php'; ?>
+<?php
+    use \App\FrontEnd;
+    require __DIR__ . '/../bootstrap.php';
+    FrontEnd::getInstance()->sendHeaders();
+?>
 
 <!DOCTYPE html>
 <html>
@@ -6,20 +10,20 @@
         <title>Au plus court</title>
         <meta charset="utf-8" />
         <link rel="stylesheet" type="text/css" href="/css/index.css">
-        <?php App::get()->includeCSS(); ?>
+        <link rel="icon" href="data:;base64,=">
+        <?php FrontEnd::getInstance()->includeCSS(); ?>
     </head>
     <body>
         <header>
             <h1>Calculateur de trajets</h1>
-            <?php require __DIR__ . '/../test/testDijkstra.php'; ?>
         </header>
         <div id="main">
-            <nav><?php require App::get()->getViewsDir() . '/nav.php'; ?></nav>
+            <nav><?php require FrontEnd::VIEWS_DIR . '/nav.php'; ?></nav>
             <div id="view">
-                <?php require App::get()->getViewsDir() . '/' . App::get()->getView() . '.php'; ?>
+                <?php require FrontEnd::VIEWS_DIR . '/' . FrontEnd::getInstance()->getView() . '.php'; ?>
             </div>
         </div>
-        <?php App::get()->includeJS(); ?>
+        <?php FrontEnd::getInstance()->includeJS(); ?>
         <script src="/js/index.js"></script>
     </body>
 </html>

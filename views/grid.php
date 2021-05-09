@@ -5,9 +5,9 @@
     <table><tbody>
         <tr><td colspan="2">
             Dimensions :<br />
-            <input id="nbLines" type="number" value="20" />
+            <input id="heightGrid" type="number" value="20" />
             &#10005
-            <input id="nbColumns" type="number" min="10" value="40" />
+            <input id="widthGrid" type="number" min="10" value="40" />
         </td></tr>
         <tr><td colspan="2">
             <br />Position :

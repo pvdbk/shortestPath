@@ -1,6 +1,6 @@
 <?php
 
-use Dijkstra\{Net, Node, Line, Dijkstra};
+use Dijkstra\{Net, Node, Line, Solver};
 
 (function () {
     $net = new Net();
@@ -23,11 +23,11 @@ use Dijkstra\{Net, Node, Line, Dijkstra};
         new Line($d, $e, 6),
         new Line($e, $f, 9)
     );
-    $dijkstra = new Dijkstra($net);
-    $dijkstra->solve($a, $e);
+    $solver = new Solver($net);
+    $solver->solve($a, $e);
     $res = '';
-    for($x = $e; $x !== $a; $x = $x->getRouter()) $res .= $x->getX() . ' ';
-    $dijkstra->solve($a, $g);
+    for($h = $e; $h !== $a; $h = $h->getRouter()) $res .= $h->getX() . ' ';
+    $solver->solve($a, $g);
     $res .= $g->getRouter() == null ? 'OK' : 'Aïe';
     echo '<p>Result: ' . $res . '<br />Expected: 5 6 3 OK</p>';
 })();

@@ -2,7 +2,7 @@
 
 namespace Dijkstra;
 
-class Dijkstra
+class Solver
 {
     private Net $net;
     private array $taken;

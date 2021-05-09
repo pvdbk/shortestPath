@@ -2,7 +2,7 @@
     "nav": [
         {
             "text": "accueil",
-            "url": "welcome"
+            "url": ""
         },
         {
             "text": "éditeur de grilles",
@@ -11,15 +11,13 @@
     ],
     "routes": [
         {
-            "url": "/edit\\?id=([0-9]+)",
-            "view": "grid",
-            "params": ["id"]
+            "url": "edit(\\?id=[0-9]+)?",
+            "view": "grid"
         },
         {
-            "url": "/edit",
-            "view": "grid",
-            "params": []
+            "url": "",
+            "view": "welcome"
         }
     ],
-    "defaultView": "welcome"
+    "defaultView": "notFound"
 }
