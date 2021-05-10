@@ -177,6 +177,49 @@ class Grid {
         this.context.closePath();
         this.context.fill();
     }
+
+    getB64Content() {
+        let binaryString = '';
+        let bit = 0;
+        let byte = 0;
+        for(let line = 0; line < this.height; line++) {
+            for(let column = 0; column < this.width; column++) {
+                if(this.content[line][column]) {
+                    byte += 1<<bit;
+                }
+                bit = (bit+1)%8;
+                if(bit === 0) {
+                    binaryString += String.fromCharCode(byte);
+                    byte = 0;
+                }
+            }
+        }
+        if(bit !== 0) {
+            binaryString += String.fromCharCode(byte);
+        }
+        return btoa(binaryString);
+    }
+
+    setContentFromString(s) {
+        const binaryString = atob(s);
+        let newContent;
+        if(binaryString.length === Math.floor((this.height*this.width+7)/8)) {
+            let i = -1;
+            let bit = 0;
+            let c;
+            newContent = this.getNewContent();
+            for(let line = 0; line < this.height; line++) {
+                for(let column = 0; column < this.width; column++) {
+                    if(bit === 0) {
+                        c = binaryString.charCodeAt(++i);
+                    }
+                    newContent[line][column] = (c & 1<<bit) !== 0;
+                    bit = (bit+1)%8;
+                }
+            }
+        }
+        this.setContent(newContent);
+    }
 }
 
 const gridCanvas = document.getElementById('grid');

@@ -9,15 +9,16 @@ CREATE TABLE IF NOT EXISTS map (
     name VARCHAR(255) NOT NULL,
     height INT NOT NULL,
     width INT NOT NULL,
-    definition BLOB NOT NULL,
-    creation_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-    update_time DATETIME DEFAULT CURRENT_TIMESTAMP
+    content BLOB NOT NULL,
+    radius TINYINT NOT NULL,
+    available_net BOOL NOT NULL DEFAULT FALSE,
+    CONSTRAINT `un_map_name` UNIQUE (name)
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS net (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     map_id INT NULL DEFAULT NULL,
-    update_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    turtle_size TINYINT NOT NULL,
     CONSTRAINT `fk_net_map`
         FOREIGN KEY (map_id) REFERENCES map (id)
         ON DELETE CASCADE
