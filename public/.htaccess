@@ -1,3 +1,6 @@
 RewriteEngine on
+
+RewriteRule ^api/ /api.php [L]
+
 RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_URI} !-f
 RewriteRule .* index.php

@@ -1,11 +1,11 @@
 <?php
 
 trait Singleton {
-    private static ?self $instance = null;
+    private static $instance = null;
 
-    final public static function getInstance(): self {
+    final public static function getInstance(): static {
         if (self::$instance === null) {
-            self::$instance = new self();
+            self::$instance = new static();
         }
         return self::$instance;
     }

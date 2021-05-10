@@ -19,5 +19,6 @@
             "view": "welcome"
         }
     ],
-    "defaultView": "notFound"
+    "defaultView": "notFound",
+    "api": {}
 }
