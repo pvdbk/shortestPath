@@ -1,1 +1,3 @@
-{}
+{
+    "headersHandler": "App\\HeadersHandler"
+}

@@ -2,15 +2,15 @@
 
 namespace App;
 
-class Api extends Abst
+class Api
 {
     use \Singleton;
+    use \Dependencies\Injection;
     private array $toCall;
     private array $args;
 
     protected function __construct()
     {
-        parent::__construct();
         $this->args = [];
         preg_match(
             '`^/api/([^?/]*)(/[^?]*)?(\\?(.*))?$`',
@@ -19,9 +19,10 @@ class Api extends Abst
         );
         $domain = $matches[1];
         $conf = $this->getConfig()['api'];
-        $this->toCall = array($this, 'sendHeaders');
+        $headersHdl = $this->getDepInstance('headersHandler');
+        $this->toCall = array($headersHdl, 'send');
         if(!array_key_exists($domain, $conf)) {
-            $this->notFound();
+            $headersHdl->notFound();
         } else {
             extract($conf[$domain]);
             $path = isset($matches[2]) ? $matches[2] : '';
@@ -31,9 +32,9 @@ class Api extends Abst
                 $notFound = $_SERVER['REQUEST_METHOD'] !== $method || !preg_match('`^' . $url . '$`', $path, $matches);
             }
             if ($notFound) {
-                $this->notFound();
+                $headersHdl->notFound();
             } else {
-                $this->toCall = array(('Controllers\\' . $controller)::getInstance(), $func);
+                $this->toCall = array($this->getDepInstance($controller), $func);
                 for ($i = 0; $i < count($args); $i++) {
                     $this->args[$args[$i]] = $matches[$i+1];
                 }
