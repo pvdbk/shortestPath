@@ -17,4 +17,9 @@ trait Injection {
     {
         return self::getDep($depName)::getInstance();
     }
+
+    public function getConfig(): array
+    {
+        return Handler::getInstance()->getConfig();
+    }
 }

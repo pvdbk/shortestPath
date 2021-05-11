@@ -7,11 +7,21 @@ class Handler
     use \Singleton;
     private array $depTree;
     private array $map;
+    private array $config;
 
     private function __construct()
     {
         $this->depTree = [];
-        $this->map = json_decode(file_get_contents(__DIR__ . '/map.json'), true);
+        $this->config = json_decode(file_get_contents(__DIR__ . '/../../config.json'), true);
+        $this->map = array_merge(
+            json_decode(file_get_contents(__DIR__ . '/maps/main.json'), true),
+            json_decode(file_get_contents(__DIR__ . '/maps/'. $this->config['env'] . 'Map.json'), true),
+        );
+    }
+
+    public function getConfig(): array
+    {
+        return $this->config;
     }
 
     public function get($client, $depName): string
