@@ -1,3 +1,4 @@
 {
-    "headersHandler": "App\\HeadersHandler"
+    "headersHandler": "App\\HeadersHandler",
+    "apiException": "Exceptions\\ApiException"
 }
