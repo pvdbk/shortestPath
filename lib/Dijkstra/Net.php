@@ -40,7 +40,7 @@ class Net
     public function addLines()
     {
         $lines = func_get_args();
-        foreach($lines as $line) {
+        foreach ($lines as $line) {
             if (!($line instanceof Line)) {
                 throw new \Exception('Only lines');
             } elseif (in_array($line, $this->lines)) {
@@ -55,6 +55,6 @@ class Net
     public function nullifyRouters()
     {
         $iMax = count($this->nodes);
-        for($i = 0; $i < $iMax; $i++) $this->nodes[$i]->setRouter(null);
+        for ($i = 0; $i < $iMax; $i++) $this->nodes[$i]->setRouter(null);
     }
 }

@@ -7,7 +7,7 @@ trait Injection {
 
     private static function getDep($depName): string
     {
-        if(self::$depProvider === null) {
+        if (self::$depProvider === null) {
             self::$depProvider = new Provider(get_called_class());
         }
         return self::$depProvider->get($depName);

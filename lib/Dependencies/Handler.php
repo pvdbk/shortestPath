@@ -26,11 +26,11 @@ class Handler
 
     public function get($client, $depName): string
     {
-        if(!key_exists($depName, $this->map)) {
+        if (!key_exists($depName, $this->map)) {
             $this->map[$depName] = $depName;
         }
         $depClass = $this->map[$depName];
-        if(!$this->dependsDirectly($client, $depClass)) {
+        if (!$this->dependsDirectly($client, $depClass)) {
             $this->addDependency($client, $depClass);
         }
         return $depClass;
@@ -40,7 +40,7 @@ class Handler
     {
         $this->check($client);
         $this->check($depClass);
-        if($this->depends($depClass, $client)) {
+        if ($this->depends($depClass, $client)) {
             throw new \Exception();
         }
         $this->depTree[$client][] = $depClass;
@@ -48,17 +48,17 @@ class Handler
 
     private function check($client)
     {
-        if(!key_exists($client, $this->depTree)) {
+        if (!key_exists($client, $this->depTree)) {
             $parent = get_parent_class($client);
-            if($parent !== false) {
+            if ($parent !== false) {
                 $this->check($parent);
                 $this->depTree[$client] = [$parent];
             } else {
                 $this->depTree[$client] = [];
             }
             $keys = array_keys($this->depTree);
-            foreach($keys as $key) {
-                if(get_parent_class($key) === $client) {
+            foreach ($keys as $key) {
+                if (get_parent_class($key) === $client) {
                     $this->depTree[$key][] = $client;
                 }
             }
@@ -75,9 +75,9 @@ class Handler
         $this->check($client);
         $this->check($depClass);
         $ret = ($client === $depClass) || in_array($depClass, $this->depTree[$client]);
-        if(!$ret) {
+        if (!$ret) {
             $deps = $this->depTree[$client];
-            for($i = 0; !$ret && $i < count($deps); $i++) {
+            for ($i = 0; !$ret && $i < count($deps); $i++) {
                 $ret = $this->depends($deps[$i], $depClass);
             }
         }

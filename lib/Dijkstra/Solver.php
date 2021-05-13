@@ -48,7 +48,7 @@ class Solver
                 $ret->setRouter($line->getNode1());
             }
     	}
-		if($ret) {
+		if ($ret) {
             $ret->setDistance($line->getAccLength());
         }
     	return $ret;
@@ -58,7 +58,7 @@ class Solver
     public function solve(Node $start, Node $end)
     {
         $nodes = $this->net->getNodes();
-        if(!in_array($start, $nodes) || !in_array($end, $nodes)) {
+        if (!in_array($start, $nodes) || !in_array($end, $nodes)) {
             throw new \Exception('Not in the net');
         }
         $this->remained = array_slice($this->net->getLines(), 0);

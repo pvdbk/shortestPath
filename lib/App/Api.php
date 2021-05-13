@@ -20,8 +20,8 @@ class Api
         $domain = $matches[1];
         $conf = $this->getConfig()['api'];
         $headersHdl = $this->getDepInstance('headersHandler');
-        $this->toCall = array($headersHdl, 'send');
-        if(!array_key_exists($domain, $conf)) {
+        $this->toCall = [$headersHdl, 'send'];
+        if (!array_key_exists($domain, $conf)) {
             $headersHdl->notFound();
         } else {
             extract($conf[$domain]);
@@ -34,7 +34,7 @@ class Api
             if ($notFound) {
                 $headersHdl->notFound();
             } else {
-                $this->toCall = array($this->getDepInstance($controller), $func);
+                $this->toCall = [$this->getDepInstance($controller), $func];
                 for ($i = 0; $i < count($args); $i++) {
                     $this->args[$args[$i]] = $matches[$i+1];
                 }

@@ -26,7 +26,7 @@ use Dijkstra\{Net, Node, Line, Solver};
     $solver = new Solver($net);
     $solver->solve($a, $e);
     $res = '';
-    for($h = $e; $h !== $a; $h = $h->getRouter()) $res .= $h->getX() . ' ';
+    for ($h = $e; $h !== $a; $h = $h->getRouter()) $res .= $h->getX() . ' ';
     $solver->solve($a, $g);
     $res .= $g->getRouter() == null ? 'OK' : 'Aïe';
     echo '<p>Result: ' . $res . '<br />Expected: 5 6 3 OK</p>';

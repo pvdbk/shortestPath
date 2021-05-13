@@ -32,7 +32,7 @@ class FrontEnd
     public function includeCSS()
     {
         $partialPath = 'css/' . $this->view . '.css';
-        if(file_exists(self::PUBLIC_DIR . $partialPath)) {
+        if (file_exists(self::PUBLIC_DIR . $partialPath)) {
             echo '<link rel = "stylesheet" type="text/css" href="/' . $partialPath . '">';
         }
     }
@@ -40,7 +40,7 @@ class FrontEnd
     public function includeJS()
     {
         $partialPath = 'js/' . $this->view . '.js';
-        if(file_exists(self::PUBLIC_DIR . $partialPath)) {
+        if (file_exists(self::PUBLIC_DIR . $partialPath)) {
             echo '<script src="/' . $partialPath . '"></script>';
         }
     }

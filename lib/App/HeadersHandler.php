@@ -17,7 +17,7 @@ class HeadersHandler
     }
 
     public function send() {
-        foreach($this->headers as $header) {
+        foreach ($this->headers as $header) {
             header($header);
         }
     }
