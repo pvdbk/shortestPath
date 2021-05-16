@@ -1,0 +1,55 @@
+[
+    {"const": null},
+    {
+        "type": "object",
+        "required": {"const": null}
+    },
+    {
+        "type": "object",
+        "required": {"enum": {"type": "array"}}
+    },
+    {
+        "type": "object",
+        "required": {"type": {"const": "boolean"}},
+        "optional": {"nullable": {"type": "boolean"}}
+    },
+    {
+        "type": "object",
+        "required": {"type": {"const": "number"}},
+        "optional": {"nullable": {"type": "boolean"}}
+    },
+    {
+        "type": "object",
+        "required": {"type": {"const": "string"}},
+        "optional": {"nullable": {"type": "boolean"}}
+    },
+    {
+        "type": "object",
+        "required": {"type": {"const": "array"}},
+        "optional": {
+            "items": {"ref": "/"},
+            "nullable": {"type": "boolean"}
+        }
+    },
+    {
+        "type": "object",
+        "required": {"type": {"const": "object"}},
+        "optional": {
+            "required":  {
+                "type": "object",
+                "other": {"ref": "/"}
+            },
+            "optional": {"ref": "../required"},
+            "other": {"ref": "/"},
+            "nullable": {"type": "boolean"}
+        }
+    },
+    {
+        "type": "object",
+        "required": {"ref": {"type": "string"}}
+    },
+    {
+        "type": "array",
+        "items": {"ref": "/"}
+    }
+]

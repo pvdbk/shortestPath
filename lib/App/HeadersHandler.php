@@ -4,7 +4,7 @@ namespace App;
 
 class HeadersHandler
 {
-    use \Singleton;
+    use \Utils\Singleton;
     private array $headers;
 
     protected function __construct()

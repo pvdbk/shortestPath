@@ -4,7 +4,8 @@ namespace App;
 
 class Api
 {
-    use \Singleton;
+    use \Utils\Singleton;
+    use \Utils\Arrays;
     use \Dependencies\Injection;
     private array $toCall;
     private array $args;
@@ -19,22 +20,26 @@ class Api
         );
         $domain = $matches[1];
         $conf = $this->getConfig()['api'];
-        $headersHdl = $this->getDepInstance('headersHandler');
+        $headersHdl = self::getDepInstance('headersHandler');
         $this->toCall = [$headersHdl, 'send'];
         if (!array_key_exists($domain, $conf)) {
             $headersHdl->notFound();
         } else {
             extract($conf[$domain]);
             $path = isset($matches[2]) ? $matches[2] : '';
-            $notFound = true;
-            for ($i = 0; $i < count($routes) && $notFound; $i++) {
+            $continue = true;
+            for ($i = 0; $continue && $i < count($routes); $i++) {
                 extract($routes[$i]);
-                $notFound = $_SERVER['REQUEST_METHOD'] !== $method || !preg_match('`^' . $url . '$`', $path, $matches);
+                $continue = (
+                    $_SERVER['REQUEST_METHOD'] !== $method
+                ) && (
+                    preg_match('`^' . $url . '$`', $path, $matches) !== 1
+                );
             }
-            if ($notFound) {
+            if ($continue) {
                 $headersHdl->notFound();
             } else {
-                $this->toCall = [$this->getDepInstance($controller), $func];
+                $this->toCall = [self::getDepInstance($controller), $func];
                 for ($i = 0; $i < count($args); $i++) {
                     $this->args[$args[$i]] = $matches[$i+1];
                 }

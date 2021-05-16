@@ -54,7 +54,8 @@ class Net
 
     public function nullifyRouters()
     {
-        $iMax = count($this->nodes);
-        for ($i = 0; $i < $iMax; $i++) $this->nodes[$i]->setRouter(null);
+        foreach ($this->nodes as $node) {
+            $node->setRouter(null);
+        }
     }
 }

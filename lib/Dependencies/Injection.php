@@ -5,7 +5,7 @@ namespace Dependencies;
 trait Injection {
     private static ?Provider $depProvider = null;
 
-    private static function getDep($depName): string
+    private static function getDep(string $depName): string
     {
         if (self::$depProvider === null) {
             self::$depProvider = new Provider(get_called_class());
@@ -13,7 +13,7 @@ trait Injection {
         return self::$depProvider->get($depName);
     }
 
-    private function getDepInstance($depName): object
+    private static function getDepInstance(string $depName): object
     {
         return self::getDep($depName)::getInstance();
     }

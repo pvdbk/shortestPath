@@ -28,6 +28,6 @@ use Dijkstra\{Net, Node, Line, Solver};
     $res = '';
     for ($h = $e; $h !== $a; $h = $h->getRouter()) $res .= $h->getX() . ' ';
     $solver->solve($a, $g);
-    $res .= $g->getRouter() == null ? 'OK' : 'Aïe';
+    $res .= is_null($g->getRouter()) ? 'OK' : 'Aïe';
     echo '<p>Result: ' . $res . '<br />Expected: 5 6 3 OK</p>';
 })();

@@ -1,6 +1,9 @@
 <?php
 
-trait Singleton {
+namespace Utils;
+
+trait Singleton
+{
     private static $instance = null;
 
     final public static function getInstance(): static {

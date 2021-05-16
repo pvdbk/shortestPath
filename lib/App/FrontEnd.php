@@ -4,24 +4,24 @@ namespace App;
 
 class FrontEnd
 {
-    use \Singleton;
+    use \Utils\Singleton;
     use \Dependencies\Injection;
     const VIEWS_DIR = __DIR__ . '/../../views/';
     const PUBLIC_DIR = __DIR__ . '/../../public/';
     private string $view;
-    private HeadersHandler $headersHdl;
+    private object $headersHdl;
 
     protected function __construct()
     {
-        $this->headersHdl = $this->getDepInstance('headersHandler');
+        $this->headersHdl = self::getDepInstance('headersHandler');
         $config = $this->getConfig();
         $routes = $config['routes'];
-        $notFound = true;
-        for ($i = 0; $i < count($routes) && $notFound; $i++) {
+        $continue = true;
+        for ($i = 0; $continue && $i < count($routes); $i++) {
             extract($routes[$i]);
-            $notFound = !preg_match('`^/' . $url . '$`', $_SERVER['REQUEST_URI'], $matches);
+            $continue = !preg_match('`^/' . $url . '$`', $_SERVER['REQUEST_URI'], $matches);
         }
-        if ($notFound) {
+        if ($continue) {
             $this->headersHdl->notFound();
             $this->view = $config['defaultView'];
         } else {

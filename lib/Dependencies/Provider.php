@@ -13,7 +13,7 @@ class Provider
         $this->handler = Handler::getInstance();
     }
 
-    public function get($depName): string
+    public function get(string $depName): string
     {
         return $this->handler->get($this->client, $depName);
     }

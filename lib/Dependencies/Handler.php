@@ -4,18 +4,20 @@ namespace Dependencies;
 
 class Handler
 {
-    use \Singleton;
+    use \Utils\Singleton;
+    use \Utils\Arrays;
     private array $depTree;
     private array $map;
     private array $config;
 
     private function __construct()
     {
+        $jsonsDir = __DIR__ . '/../../jsons/';
         $this->depTree = [];
-        $this->config = json_decode(file_get_contents(__DIR__ . '/../../config.json'), true);
+        $this->config = json_decode(file_get_contents($jsonsDir . 'config.json'), true);
         $this->map = array_merge(
-            json_decode(file_get_contents(__DIR__ . '/maps/main.json'), true),
-            json_decode(file_get_contents(__DIR__ . '/maps/'. $this->config['env'] . 'Map.json'), true),
+            json_decode(file_get_contents($jsonsDir . 'maps/main.json'), true),
+            json_decode(file_get_contents($jsonsDir . 'maps/'. $this->config['env'] . 'Map.json'), true),
         );
     }
 
@@ -24,7 +26,7 @@ class Handler
         return $this->config;
     }
 
-    public function get($client, $depName): string
+    public function get(string $client, string $depName): string
     {
         if (!key_exists($depName, $this->map)) {
             $this->map[$depName] = $depName;
@@ -36,7 +38,7 @@ class Handler
         return $depClass;
     }
 
-    private function addDependency($client, $depClass)
+    private function addDependency(string $client, string $depClass)
     {
         $this->check($client);
         $this->check($depClass);
@@ -46,7 +48,7 @@ class Handler
         $this->depTree[$client][] = $depClass;
     }
 
-    private function check($client)
+    private function check(string $client)
     {
         if (!key_exists($client, $this->depTree)) {
             $parent = get_parent_class($client);
@@ -65,22 +67,25 @@ class Handler
         }
     }
 
-    public function dependsDirectly($client, $depClass) : bool
+    public function dependsDirectly(string $client, string $depClass) : bool
     {
-        return key_exists($client, $this->depTree) && in_array($depClass, $this->depTree);
+        return key_exists($client, $this->depTree) && in_array($depClass, $this->depTree[$client]);
     }
 
-    public function depends($client, $depClass) : bool
+    public function depends(string $client, string $depClass) : bool
     {
         $this->check($client);
         $this->check($depClass);
-        $ret = ($client === $depClass) || in_array($depClass, $this->depTree[$client]);
-        if (!$ret) {
-            $deps = $this->depTree[$client];
-            for ($i = 0; !$ret && $i < count($deps); $i++) {
-                $ret = $this->depends($deps[$i], $depClass);
-            }
-        }
-        return $ret;
+        $isIndep = function (string $client) use(&$isIndep, $depClass): bool {
+            return (
+                $client !== $depClass
+            ) && self::every(
+                $this->depTree[$client],
+                function(string $client) use(&$isIndep) {
+                    return $isIndep($client);
+                }
+            );
+        };
+        return !$isIndep($client);
     }
 }
